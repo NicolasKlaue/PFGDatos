@@ -5,7 +5,7 @@ classifier = joblib.load("tone_classifier_model.pkl")
 vectorizer = joblib.load("tfidf_vectorizer.pkl")
 
 # Example email to predict
-email = "Subject:\n Heyy I am writting about the birthday party\nBody: We just wanted to let you know that the birthday party will be taking place tomorrow, love you"
+email = "Subject:\nThis is unaccpetable, the way I have been treated, I will leave this company today\nBody: There is no way of making me stay "
 
 # Vectorize the email
 email_vectorized = vectorizer.transform([email])

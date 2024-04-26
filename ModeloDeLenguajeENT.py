@@ -8,6 +8,8 @@ from sklearn.metrics import accuracy_score, classification_report, confusion_mat
 import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
+from sklearn.utils.class_weight import compute_class_weight
+import numpy as np
 
 # Load the dataset from CSV
 data = pd.read_csv("FinalCleanDatabase.csv")
@@ -41,9 +43,18 @@ vectorizer = TfidfVectorizer()
 
 # Fit and transform the training data with the vectorizer
 X_train_vectorized = vectorizer.fit_transform(X_train)
+# Calculate class weights
 
-# Define the classifier (Support Vector Machine)
-classifier = make_pipeline(StandardScaler(with_mean=False), SVC(kernel='linear'))
+class_weights = compute_class_weight('balanced', classes=np.unique(y_train), y=y_train)
+
+# Convert class weights to a dictionary
+class_weight_dict = dict(zip(np.unique(y_train), class_weights))
+
+# Define the classifier (Support Vector Machine) with class weights
+classifier = make_pipeline(StandardScaler(with_mean=False), SVC(kernel='linear', class_weight=class_weight_dict))
+
+# Fit the classifier on the training data
+classifier.fit(X_train_vectorized, y_train)
 
 # Fit the classifier on the training data
 classifier.fit(X_train_vectorized, y_train)
