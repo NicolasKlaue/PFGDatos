@@ -85,4 +85,4 @@ plt.ylabel('Actual')
 plt.title('Confusion Matrix (Percentages)')
 plt.show()
 
-model.save("ModeloMLP.h5")
+model.save("ModeloMLP.keras")
